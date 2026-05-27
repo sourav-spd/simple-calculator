@@ -11,8 +11,8 @@ A production-ready Model Context Protocol (MCP) server that provides comprehensi
   - Expression Evaluator: `evaluate_expression` (supports complex mathematical expressions)
 
 - **Multiple Transport Modes**:
+  - `sse` - Server-Sent Events for web clients (default)
   - `stdio` - Standard input/output for Claude Desktop, Cursor
-  - `sse` - Server-Sent Events for web clients
   - `streamable-http` - MCP v1 preferred HTTP mode
 
 - **Safe Expression Evaluation**: Supports standard math functions (sqrt, pow, sin, cos, log, etc.)
@@ -27,19 +27,21 @@ pip install -e .
 
 ## Usage
 
-### stdio Mode (Default - for Claude Desktop/Cursor)
+### SSE Mode (Default - for Web Clients)
 ```bash
 calculator-mcp
+# Or explicitly specify:
+calculator-mcp --mode sse --port 8000
 ```
 
-### SSE Mode (for Web Clients)
+### stdio Mode (for Claude Desktop/Cursor)
 ```bash
-calculator-mcp --mode sse --port 8009
+calculator-mcp --mode stdio
 ```
 
 ### Streamable HTTP Mode (MCP v1)
 ```bash
-calculator-mcp --mode streamable-http --port 8009
+calculator-mcp --mode streamable-http --port 8000
 ```
 
 ## Tools
@@ -189,7 +191,7 @@ Add to `claude_desktop_config.json`:
 {
   "mcpServers": {
     "calculator": {
-      "url": "http://localhost:8009/sse"
+      "url": "http://localhost:8000/sse"
     }
   }
 }
