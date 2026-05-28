@@ -46,14 +46,16 @@ calculator-mcp --mode streamable-http --port 8000
 
 ## Tools
 
+> Numeric tool inputs now accept raw numbers or numeric strings (for example: `"4.2"`).
+>
 ### Basic Arithmetic
 
 #### add
 Add two numbers together.
 
 **Parameters:**
-- `a` (number): First number
-- `b` (number): Second number
+- `a` (number or numeric string): First number
+- `b` (number or numeric string): Second number
 
 **Example:** `a: 3.14, b: 2.0` → `5.14`
 
@@ -61,8 +63,8 @@ Add two numbers together.
 Subtract second number from first number.
 
 **Parameters:**
-- `a` (number): First number
-- `b` (number): Second number
+- `a` (number or numeric string): First number
+- `b` (number or numeric string): Second number
 
 **Example:** `a: 10.5, b: 3.2` → `7.3`
 
@@ -70,8 +72,8 @@ Subtract second number from first number.
 Multiply two numbers together.
 
 **Parameters:**
-- `a` (number): First number
-- `b` (number): Second number
+- `a` (number or numeric string): First number
+- `b` (number or numeric string): Second number
 
 **Example:** `a: 2.5, b: 4.0` → `10.0`
 
@@ -79,8 +81,8 @@ Multiply two numbers together.
 Divide the first number by the second number.
 
 **Parameters:**
-- `dividend` (number): The number to be divided
-- `divisor` (number): The number to divide by
+- `dividend` (number or numeric string): The number to be divided
+- `divisor` (number or numeric string): The number to divide by
 
 **Example:** `dividend: 10.5, divisor: 2.0` → `5.25`
 
@@ -90,8 +92,8 @@ Divide the first number by the second number.
 Raise a base number to the power of an exponent.
 
 **Parameters:**
-- `base` (number): The base number
-- `exponent` (number): The exponent (power)
+- `base` (number or numeric string): The base number
+- `exponent` (number or numeric string): The exponent (power)
 
 **Example:** `base: 2.0, exponent: 3.0` → `8.0`
 
@@ -99,7 +101,7 @@ Raise a base number to the power of an exponent.
 Calculate the square root of a number.
 
 **Parameters:**
-- `number` (number): The number to find the square root of (must be ≥ 0)
+- `number` (number or numeric string): The number to find the square root of (must be ≥ 0)
 
 **Example:** `16.0` → `4.0`
 
@@ -107,8 +109,8 @@ Calculate the square root of a number.
 Calculate the remainder when dividing.
 
 **Parameters:**
-- `dividend` (number): The number to be divided
-- `divisor` (number): The number to divide by
+- `dividend` (number or numeric string): The number to be divided
+- `divisor` (number or numeric string): The number to divide by
 
 **Example:** `dividend: 17.5, divisor: 5.0` → `2.5`
 
@@ -118,7 +120,7 @@ Calculate the remainder when dividing.
 Calculate the absolute value of a number.
 
 **Parameters:**
-- `number` (number): The number to find the absolute value of
+- `number` (number or numeric string): The number to find the absolute value of
 
 **Example:** `-42.5` → `42.5`
 
@@ -126,8 +128,8 @@ Calculate the absolute value of a number.
 Round a number to specified decimal places.
 
 **Parameters:**
-- `number` (number): The number to round
-- `decimals` (integer, optional): Number of decimal places (default: 0)
+- `number` (number or numeric string): The number to round
+- `decimals` (integer or numeric string, optional): Number of decimal places (default: 0)
 
 **Example:** `number: 3.14159, decimals: 2` → `3.14`
 
@@ -135,7 +137,7 @@ Round a number to specified decimal places.
 Calculate the factorial of a non-negative integer.
 
 **Parameters:**
-- `number` (integer): The non-negative integer
+- `number` (integer or numeric string): The non-negative integer
 
 **Example:** `5` → `120` (5! = 5×4×3×2×1)
 
@@ -143,8 +145,8 @@ Calculate the factorial of a non-negative integer.
 Calculate percentage of a number or what percentage a value represents.
 
 **Parameters:**
-- `value` (number): The value or percentage amount
-- `total` (number): The total value or base number
+- `value` (number or numeric string): The value or percentage amount
+- `total` (number or numeric string): The total value or base number
 - `mode` (string, optional): 'of' or 'is' (default: 'of')
   - `of`: calculates value% of total (e.g., 20% of 100)
   - `is`: calculates what percentage value is of total (e.g., 20 is what % of 100)

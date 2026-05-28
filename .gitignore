@@ -1,0 +1,4 @@
+__pycache__/
+.venv/
+simple_calculator_mcp.egg-info/
+tools/__pycache__/

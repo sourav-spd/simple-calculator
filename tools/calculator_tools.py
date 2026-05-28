@@ -26,8 +26,14 @@ class AddToolHandler(ToolHandler):
                 "type": "object",
                 "additionalProperties": False,
                 "properties": {
-                    "a": {"type": "number", "description": "First number."},
-                    "b": {"type": "number", "description": "Second number."},
+                    "a": {
+                        "type": ["number", "string"],
+                        "description": "First number or numeric string.",
+                    },
+                    "b": {
+                        "type": ["number", "string"],
+                        "description": "Second number or numeric string.",
+                    },
                 },
                 "required": ["a", "b"],
             },
@@ -35,8 +41,8 @@ class AddToolHandler(ToolHandler):
 
     async def run_tool(self, args: dict) -> Sequence[TextContent]:
         self.validate_required_args(args, ["a", "b"])
-        a = float(args["a"])
-        b = float(args["b"])
+        a = self.parse_number(args["a"], "a")
+        b = self.parse_number(args["b"], "b")
         
         result = a + b
         
@@ -67,8 +73,14 @@ class SubtractToolHandler(ToolHandler):
                 "type": "object",
                 "additionalProperties": False,
                 "properties": {
-                    "a": {"type": "number", "description": "First number."},
-                    "b": {"type": "number", "description": "Second number."},
+                    "a": {
+                        "type": ["number", "string"],
+                        "description": "First number or numeric string.",
+                    },
+                    "b": {
+                        "type": ["number", "string"],
+                        "description": "Second number or numeric string.",
+                    },
                 },
                 "required": ["a", "b"],
             },
@@ -76,8 +88,8 @@ class SubtractToolHandler(ToolHandler):
 
     async def run_tool(self, args: dict) -> Sequence[TextContent]:
         self.validate_required_args(args, ["a", "b"])
-        a = float(args["a"])
-        b = float(args["b"])
+        a = self.parse_number(args["a"], "a")
+        b = self.parse_number(args["b"], "b")
         
         result = a - b
         
@@ -108,8 +120,14 @@ class MultiplyToolHandler(ToolHandler):
                 "type": "object",
                 "additionalProperties": False,
                 "properties": {
-                    "a": {"type": "number", "description": "First number."},
-                    "b": {"type": "number", "description": "Second number."},
+                    "a": {
+                        "type": ["number", "string"],
+                        "description": "First number or numeric string.",
+                    },
+                    "b": {
+                        "type": ["number", "string"],
+                        "description": "Second number or numeric string.",
+                    },
                 },
                 "required": ["a", "b"],
             },
@@ -117,8 +135,8 @@ class MultiplyToolHandler(ToolHandler):
 
     async def run_tool(self, args: dict) -> Sequence[TextContent]:
         self.validate_required_args(args, ["a", "b"])
-        a = float(args["a"])
-        b = float(args["b"])
+        a = self.parse_number(args["a"], "a")
+        b = self.parse_number(args["b"], "b")
         
         result = a * b
         
@@ -150,11 +168,11 @@ class DivideToolHandler(ToolHandler):
                 "additionalProperties": False,
                 "properties": {
                     "dividend": {
-                        "type": "number",
+                        "type": ["number", "string"],
                         "description": "The number to be divided",
                     },
                     "divisor": {
-                        "type": "number",
+                        "type": ["number", "string"],
                         "description": "The number to divide by",
                     },
                 },
@@ -164,8 +182,8 @@ class DivideToolHandler(ToolHandler):
 
     async def run_tool(self, args: dict) -> Sequence[TextContent]:
         self.validate_required_args(args, ["dividend", "divisor"])
-        dividend = float(args["dividend"])
-        divisor = float(args["divisor"])
+        dividend = self.parse_number(args["dividend"], "dividend")
+        divisor = self.parse_number(args["divisor"], "divisor")
         
         if divisor == 0:
             raise ValueError("Cannot divide by zero")
@@ -200,11 +218,11 @@ class PowerToolHandler(ToolHandler):
                 "additionalProperties": False,
                 "properties": {
                     "base": {
-                        "type": "number",
+                        "type": ["number", "string"],
                         "description": "The base number",
                     },
                     "exponent": {
-                        "type": "number",
+                        "type": ["number", "string"],
                         "description": "The exponent (power)",
                     },
                 },
@@ -214,8 +232,8 @@ class PowerToolHandler(ToolHandler):
 
     async def run_tool(self, args: dict) -> Sequence[TextContent]:
         self.validate_required_args(args, ["base", "exponent"])
-        base = float(args["base"])
-        exponent = float(args["exponent"])
+        base = self.parse_number(args["base"], "base")
+        exponent = self.parse_number(args["exponent"], "exponent")
         
         result = base ** exponent
         
@@ -247,7 +265,7 @@ class SquareRootToolHandler(ToolHandler):
                 "additionalProperties": False,
                 "properties": {
                     "number": {
-                        "type": "number",
+                        "type": ["number", "string"],
                         "description": "The number to find the square root of",
                         "minimum": 0,
                     }
@@ -258,7 +276,7 @@ class SquareRootToolHandler(ToolHandler):
 
     async def run_tool(self, args: dict) -> Sequence[TextContent]:
         self.validate_required_args(args, ["number"])
-        number = float(args["number"])
+        number = self.parse_number(args["number"], "number")
         
         if number < 0:
             raise ValueError("Cannot calculate square root of negative number")
@@ -292,11 +310,11 @@ class ModuloToolHandler(ToolHandler):
                 "additionalProperties": False,
                 "properties": {
                     "dividend": {
-                        "type": "number",
+                        "type": ["number", "string"],
                         "description": "The number to be divided",
                     },
                     "divisor": {
-                        "type": "number",
+                        "type": ["number", "string"],
                         "description": "The number to divide by",
                     },
                 },
@@ -306,8 +324,8 @@ class ModuloToolHandler(ToolHandler):
 
     async def run_tool(self, args: dict) -> Sequence[TextContent]:
         self.validate_required_args(args, ["dividend", "divisor"])
-        dividend = float(args["dividend"])
-        divisor = float(args["divisor"])
+        dividend = self.parse_number(args["dividend"], "dividend")
+        divisor = self.parse_number(args["divisor"], "divisor")
         
         if divisor == 0:
             raise ValueError("Cannot calculate modulo with divisor of zero")
@@ -342,7 +360,7 @@ class AbsoluteToolHandler(ToolHandler):
                 "additionalProperties": False,
                 "properties": {
                     "number": {
-                        "type": "number",
+                        "type": ["number", "string"],
                         "description": "The number to find the absolute value of",
                     }
                 },
@@ -352,7 +370,7 @@ class AbsoluteToolHandler(ToolHandler):
 
     async def run_tool(self, args: dict) -> Sequence[TextContent]:
         self.validate_required_args(args, ["number"])
-        number = float(args["number"])
+        number = self.parse_number(args["number"], "number")
         
         result = abs(number)
         
@@ -383,14 +401,15 @@ class RoundToolHandler(ToolHandler):
                 "additionalProperties": False,
                 "properties": {
                     "number": {
-                        "type": "number",
+                        "type": ["number", "string"],
                         "description": "The number to round",
                     },
                     "decimals": {
-                        "type": "integer",
+                        "type": ["integer", "string"],
                         "description": "Number of decimal places to round to",
                         "default": 0,
                         "minimum": 0,
+                        "pattern": "^[0-9]+$",
                     },
                 },
                 "required": ["number"],
@@ -399,8 +418,8 @@ class RoundToolHandler(ToolHandler):
 
     async def run_tool(self, args: dict) -> Sequence[TextContent]:
         self.validate_required_args(args, ["number"])
-        number = float(args["number"])
-        decimals = args.get("decimals", 0)
+        number = self.parse_number(args["number"], "number")
+        decimals = self.parse_integer(args.get("decimals", 0), "decimals", minimum=0)
         
         result = round(number, decimals)
         
@@ -432,9 +451,10 @@ class FactorialToolHandler(ToolHandler):
                 "additionalProperties": False,
                 "properties": {
                     "number": {
-                        "type": "integer",
+                        "type": ["integer", "string"],
                         "description": "The non-negative integer to calculate factorial of",
                         "minimum": 0,
+                        "pattern": "^[0-9]+$",
                     }
                 },
                 "required": ["number"],
@@ -443,7 +463,7 @@ class FactorialToolHandler(ToolHandler):
 
     async def run_tool(self, args: dict) -> Sequence[TextContent]:
         self.validate_required_args(args, ["number"])
-        number = args["number"]
+        number = self.parse_integer(args["number"], "number", minimum=0)
         
         if number < 0:
             raise ValueError("Factorial is only defined for non-negative integers")
@@ -477,11 +497,11 @@ class PercentageToolHandler(ToolHandler):
                 "additionalProperties": False,
                 "properties": {
                     "value": {
-                        "type": "number",
+                        "type": ["number", "string"],
                         "description": "The value or percentage amount",
                     },
                     "total": {
-                        "type": "number",
+                        "type": ["number", "string"],
                         "description": "The total value or base number",
                     },
                     "mode": {
@@ -497,8 +517,8 @@ class PercentageToolHandler(ToolHandler):
 
     async def run_tool(self, args: dict) -> Sequence[TextContent]:
         self.validate_required_args(args, ["value", "total"])
-        value = float(args["value"])
-        total = float(args["total"])
+        value = self.parse_number(args["value"], "value")
+        total = self.parse_number(args["total"], "total")
         mode = args.get("mode", "of")
         
         if mode == "of":
