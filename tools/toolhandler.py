@@ -39,18 +39,9 @@ class ToolHandler(ABC):
         """
         pass
 
-    def validate_required_args(self, args: dict, required: list[str]) -> None:
-        """Validate that all required arguments are present.
-        
-        Args:
-            args: Dictionary of arguments to validate.
-            required: List of required argument names.
-            
-        Raises:
-            ValueError: If any required argument is missing.
-        """
-        missing = [arg for arg in required if arg not in args]
+    def validate_required_args(self, args: dict, required_fields: list[str]) -> None:
+        missing = [f for f in required_fields if f not in args]
         if missing:
-            raise ValueError(
-                f"Missing required arguments for {self.name}: {', '.join(missing)}"
+            raise RuntimeError(
+                f"Missing required argument(s): {', '.join(repr(m) for m in missing)}"
             )

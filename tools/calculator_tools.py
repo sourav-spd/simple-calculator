@@ -11,7 +11,7 @@ from .toolhandler import ToolHandler
 
 
 class AddToolHandler(ToolHandler):
-    """Add two or more numbers."""
+    """Add two numbers."""
 
     def __init__(self) -> None:
         super().__init__("add")
@@ -19,42 +19,40 @@ class AddToolHandler(ToolHandler):
     def get_tool_description(self) -> Tool:
         return Tool(
             name=self.name,
-            description="Add two or more numbers together and return the sum.",
+            title="Add",
+            description="Add two numbers and return the result.",
             inputSchema={
+                "$schema": "http://json-schema.org/draft-07/schema#",
                 "type": "object",
+                "additionalProperties": False,
                 "properties": {
-                    "numbers": {
-                        "type": "array",
-                        "items": {"type": "number"},
-                        "description": "Array of numbers to add",
-                        "minItems": 2,
-                    }
+                    "a": {"type": "number", "description": "First number."},
+                    "b": {"type": "number", "description": "Second number."},
                 },
-                "required": ["numbers"],
+                "required": ["a", "b"],
             },
         )
 
     async def run_tool(self, args: dict) -> Sequence[TextContent]:
-        self.validate_required_args(args, ["numbers"])
-        numbers = args["numbers"]
+        self.validate_required_args(args, ["a", "b"])
+        a = float(args["a"])
+        b = float(args["b"])
         
-        if not isinstance(numbers, list) or len(numbers) < 2:
-            raise ValueError("Must provide at least 2 numbers to add")
-        
-        result = sum(numbers)
+        result = a + b
         
         response = {
             "operation": "addition",
-            "numbers": numbers,
+            "a": a,
+            "b": b,
             "result": result,
-            "equation": " + ".join(str(n) for n in numbers) + f" = {result}",
+            "equation": f"{a} + {b} = {result}",
         }
         
         return [TextContent(type="text", text=json.dumps(response, indent=2))]
 
 
 class SubtractToolHandler(ToolHandler):
-    """Subtract numbers sequentially."""
+    """Subtract two numbers."""
 
     def __init__(self) -> None:
         super().__init__("subtract")
@@ -62,44 +60,40 @@ class SubtractToolHandler(ToolHandler):
     def get_tool_description(self) -> Tool:
         return Tool(
             name=self.name,
-            description="Subtract numbers sequentially (first - second - third - ...).",
+            title="Subtract",
+            description="Subtract second number from first number.",
             inputSchema={
+                "$schema": "http://json-schema.org/draft-07/schema#",
                 "type": "object",
+                "additionalProperties": False,
                 "properties": {
-                    "numbers": {
-                        "type": "array",
-                        "items": {"type": "number"},
-                        "description": "Array of numbers to subtract sequentially",
-                        "minItems": 2,
-                    }
+                    "a": {"type": "number", "description": "First number."},
+                    "b": {"type": "number", "description": "Second number."},
                 },
-                "required": ["numbers"],
+                "required": ["a", "b"],
             },
         )
 
     async def run_tool(self, args: dict) -> Sequence[TextContent]:
-        self.validate_required_args(args, ["numbers"])
-        numbers = args["numbers"]
+        self.validate_required_args(args, ["a", "b"])
+        a = float(args["a"])
+        b = float(args["b"])
         
-        if not isinstance(numbers, list) or len(numbers) < 2:
-            raise ValueError("Must provide at least 2 numbers to subtract")
-        
-        result = numbers[0]
-        for num in numbers[1:]:
-            result -= num
+        result = a - b
         
         response = {
             "operation": "subtraction",
-            "numbers": numbers,
+            "a": a,
+            "b": b,
             "result": result,
-            "equation": " - ".join(str(n) for n in numbers) + f" = {result}",
+            "equation": f"{a} - {b} = {result}",
         }
         
         return [TextContent(type="text", text=json.dumps(response, indent=2))]
 
 
 class MultiplyToolHandler(ToolHandler):
-    """Multiply two or more numbers."""
+    """Multiply two numbers."""
 
     def __init__(self) -> None:
         super().__init__("multiply")
@@ -107,37 +101,33 @@ class MultiplyToolHandler(ToolHandler):
     def get_tool_description(self) -> Tool:
         return Tool(
             name=self.name,
-            description="Multiply two or more numbers together and return the product.",
+            title="Multiply",
+            description="Multiply two numbers and return the result.",
             inputSchema={
+                "$schema": "http://json-schema.org/draft-07/schema#",
                 "type": "object",
+                "additionalProperties": False,
                 "properties": {
-                    "numbers": {
-                        "type": "array",
-                        "items": {"type": "number"},
-                        "description": "Array of numbers to multiply",
-                        "minItems": 2,
-                    }
+                    "a": {"type": "number", "description": "First number."},
+                    "b": {"type": "number", "description": "Second number."},
                 },
-                "required": ["numbers"],
+                "required": ["a", "b"],
             },
         )
 
     async def run_tool(self, args: dict) -> Sequence[TextContent]:
-        self.validate_required_args(args, ["numbers"])
-        numbers = args["numbers"]
+        self.validate_required_args(args, ["a", "b"])
+        a = float(args["a"])
+        b = float(args["b"])
         
-        if not isinstance(numbers, list) or len(numbers) < 2:
-            raise ValueError("Must provide at least 2 numbers to multiply")
-        
-        result = 1
-        for num in numbers:
-            result *= num
+        result = a * b
         
         response = {
             "operation": "multiplication",
-            "numbers": numbers,
+            "a": a,
+            "b": b,
             "result": result,
-            "equation": " × ".join(str(n) for n in numbers) + f" = {result}",
+            "equation": f"{a} × {b} = {result}",
         }
         
         return [TextContent(type="text", text=json.dumps(response, indent=2))]
@@ -152,9 +142,12 @@ class DivideToolHandler(ToolHandler):
     def get_tool_description(self) -> Tool:
         return Tool(
             name=self.name,
+            title="Divide",
             description="Divide the first number by the second number.",
             inputSchema={
+                "$schema": "http://json-schema.org/draft-07/schema#",
                 "type": "object",
+                "additionalProperties": False,
                 "properties": {
                     "dividend": {
                         "type": "number",
@@ -171,8 +164,8 @@ class DivideToolHandler(ToolHandler):
 
     async def run_tool(self, args: dict) -> Sequence[TextContent]:
         self.validate_required_args(args, ["dividend", "divisor"])
-        dividend = args["dividend"]
-        divisor = args["divisor"]
+        dividend = float(args["dividend"])
+        divisor = float(args["divisor"])
         
         if divisor == 0:
             raise ValueError("Cannot divide by zero")
@@ -199,9 +192,12 @@ class PowerToolHandler(ToolHandler):
     def get_tool_description(self) -> Tool:
         return Tool(
             name=self.name,
+            title="Power",
             description="Raise a base number to the power of an exponent.",
             inputSchema={
+                "$schema": "http://json-schema.org/draft-07/schema#",
                 "type": "object",
+                "additionalProperties": False,
                 "properties": {
                     "base": {
                         "type": "number",
@@ -218,8 +214,8 @@ class PowerToolHandler(ToolHandler):
 
     async def run_tool(self, args: dict) -> Sequence[TextContent]:
         self.validate_required_args(args, ["base", "exponent"])
-        base = args["base"]
-        exponent = args["exponent"]
+        base = float(args["base"])
+        exponent = float(args["exponent"])
         
         result = base ** exponent
         
@@ -243,9 +239,12 @@ class SquareRootToolHandler(ToolHandler):
     def get_tool_description(self) -> Tool:
         return Tool(
             name=self.name,
+            title="Square Root",
             description="Calculate the square root of a number.",
             inputSchema={
+                "$schema": "http://json-schema.org/draft-07/schema#",
                 "type": "object",
+                "additionalProperties": False,
                 "properties": {
                     "number": {
                         "type": "number",
@@ -259,7 +258,7 @@ class SquareRootToolHandler(ToolHandler):
 
     async def run_tool(self, args: dict) -> Sequence[TextContent]:
         self.validate_required_args(args, ["number"])
-        number = args["number"]
+        number = float(args["number"])
         
         if number < 0:
             raise ValueError("Cannot calculate square root of negative number")
@@ -285,9 +284,12 @@ class ModuloToolHandler(ToolHandler):
     def get_tool_description(self) -> Tool:
         return Tool(
             name=self.name,
+            title="Modulo",
             description="Calculate the remainder when dividing the first number by the second.",
             inputSchema={
+                "$schema": "http://json-schema.org/draft-07/schema#",
                 "type": "object",
+                "additionalProperties": False,
                 "properties": {
                     "dividend": {
                         "type": "number",
@@ -304,8 +306,8 @@ class ModuloToolHandler(ToolHandler):
 
     async def run_tool(self, args: dict) -> Sequence[TextContent]:
         self.validate_required_args(args, ["dividend", "divisor"])
-        dividend = args["dividend"]
-        divisor = args["divisor"]
+        dividend = float(args["dividend"])
+        divisor = float(args["divisor"])
         
         if divisor == 0:
             raise ValueError("Cannot calculate modulo with divisor of zero")
@@ -332,9 +334,12 @@ class AbsoluteToolHandler(ToolHandler):
     def get_tool_description(self) -> Tool:
         return Tool(
             name=self.name,
+            title="Absolute Value",
             description="Calculate the absolute value of a number.",
             inputSchema={
+                "$schema": "http://json-schema.org/draft-07/schema#",
                 "type": "object",
+                "additionalProperties": False,
                 "properties": {
                     "number": {
                         "type": "number",
@@ -347,7 +352,7 @@ class AbsoluteToolHandler(ToolHandler):
 
     async def run_tool(self, args: dict) -> Sequence[TextContent]:
         self.validate_required_args(args, ["number"])
-        number = args["number"]
+        number = float(args["number"])
         
         result = abs(number)
         
@@ -370,9 +375,12 @@ class RoundToolHandler(ToolHandler):
     def get_tool_description(self) -> Tool:
         return Tool(
             name=self.name,
+            title="Round Number",
             description="Round a number to a specified number of decimal places.",
             inputSchema={
+                "$schema": "http://json-schema.org/draft-07/schema#",
                 "type": "object",
+                "additionalProperties": False,
                 "properties": {
                     "number": {
                         "type": "number",
@@ -391,7 +399,7 @@ class RoundToolHandler(ToolHandler):
 
     async def run_tool(self, args: dict) -> Sequence[TextContent]:
         self.validate_required_args(args, ["number"])
-        number = args["number"]
+        number = float(args["number"])
         decimals = args.get("decimals", 0)
         
         result = round(number, decimals)
@@ -416,9 +424,12 @@ class FactorialToolHandler(ToolHandler):
     def get_tool_description(self) -> Tool:
         return Tool(
             name=self.name,
+            title="Factorial",
             description="Calculate the factorial of a non-negative integer.",
             inputSchema={
+                "$schema": "http://json-schema.org/draft-07/schema#",
                 "type": "object",
+                "additionalProperties": False,
                 "properties": {
                     "number": {
                         "type": "integer",
@@ -458,9 +469,12 @@ class PercentageToolHandler(ToolHandler):
     def get_tool_description(self) -> Tool:
         return Tool(
             name=self.name,
+            title="Percentage",
             description="Calculate what percentage of a total a value represents, or calculate a percentage of a number.",
             inputSchema={
+                "$schema": "http://json-schema.org/draft-07/schema#",
                 "type": "object",
+                "additionalProperties": False,
                 "properties": {
                     "value": {
                         "type": "number",
@@ -483,8 +497,8 @@ class PercentageToolHandler(ToolHandler):
 
     async def run_tool(self, args: dict) -> Sequence[TextContent]:
         self.validate_required_args(args, ["value", "total"])
-        value = args["value"]
-        total = args["total"]
+        value = float(args["value"])
+        total = float(args["total"])
         mode = args.get("mode", "of")
         
         if mode == "of":
@@ -519,9 +533,12 @@ class ExpressionEvaluatorToolHandler(ToolHandler):
     def get_tool_description(self) -> Tool:
         return Tool(
             name=self.name,
+            title="Evaluate Expression",
             description="Evaluate a mathematical expression string. Supports +, -, *, /, **, (), and standard math functions.",
             inputSchema={
+                "$schema": "http://json-schema.org/draft-07/schema#",
                 "type": "object",
+                "additionalProperties": False,
                 "properties": {
                     "expression": {
                         "type": "string",

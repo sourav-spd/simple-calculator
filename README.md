@@ -1,6 +1,6 @@
 # Simple Calculator MCP Server
 
-A production-ready Model Context Protocol (MCP) server that provides comprehensive mathematical calculation tools for basic arithmetic, advanced operations, and expression evaluation.
+A production-ready Model Context Protocol (MCP) server that provides comprehensive mathematical calculation tools for basic arithmetic, advanced operations, and expression evaluation. Supports both integer and floating-point numbers.
 
 ## Features
 
@@ -49,37 +49,40 @@ calculator-mcp --mode streamable-http --port 8000
 ### Basic Arithmetic
 
 #### add
-Add two or more numbers together.
+Add two numbers together.
 
 **Parameters:**
-- `numbers` (array of numbers): Array of numbers to add (minimum 2)
+- `a` (number): First number
+- `b` (number): Second number
 
-**Example:** `[2, 3, 5]` → `10`
+**Example:** `a: 3.14, b: 2.0` → `5.14`
 
 #### subtract
-Subtract numbers sequentially.
+Subtract second number from first number.
 
 **Parameters:**
-- `numbers` (array of numbers): Array of numbers to subtract sequentially
+- `a` (number): First number
+- `b` (number): Second number
 
-**Example:** `[10, 3, 2]` → `5` (10 - 3 - 2)
+**Example:** `a: 10.5, b: 3.2` → `7.3`
 
 #### multiply
-Multiply two or more numbers together.
+Multiply two numbers together.
 
 **Parameters:**
-- `numbers` (array of numbers): Array of numbers to multiply
+- `a` (number): First number
+- `b` (number): Second number
 
-**Example:** `[2, 3, 4]` → `24`
+**Example:** `a: 2.5, b: 4.0` → `10.0`
 
 #### divide
-Divide the first number by the second.
+Divide the first number by the second number.
 
 **Parameters:**
 - `dividend` (number): The number to be divided
 - `divisor` (number): The number to divide by
 
-**Example:** `dividend: 10, divisor: 2` → `5`
+**Example:** `dividend: 10.5, divisor: 2.0` → `5.25`
 
 ### Advanced Operations
 
@@ -90,7 +93,7 @@ Raise a base number to the power of an exponent.
 - `base` (number): The base number
 - `exponent` (number): The exponent (power)
 
-**Example:** `base: 2, exponent: 8` → `256`
+**Example:** `base: 2.0, exponent: 3.0` → `8.0`
 
 #### square_root
 Calculate the square root of a number.
@@ -98,7 +101,7 @@ Calculate the square root of a number.
 **Parameters:**
 - `number` (number): The number to find the square root of (must be ≥ 0)
 
-**Example:** `16` → `4`
+**Example:** `16.0` → `4.0`
 
 #### modulo
 Calculate the remainder when dividing.
@@ -107,7 +110,7 @@ Calculate the remainder when dividing.
 - `dividend` (number): The number to be divided
 - `divisor` (number): The number to divide by
 
-**Example:** `dividend: 17, divisor: 5` → `2`
+**Example:** `dividend: 17.5, divisor: 5.0` → `2.5`
 
 ### Utility Functions
 
@@ -117,7 +120,7 @@ Calculate the absolute value of a number.
 **Parameters:**
 - `number` (number): The number to find the absolute value of
 
-**Example:** `-42` → `42`
+**Example:** `-42.5` → `42.5`
 
 #### round
 Round a number to specified decimal places.
@@ -147,8 +150,8 @@ Calculate percentage of a number or what percentage a value represents.
   - `is`: calculates what percentage value is of total (e.g., 20 is what % of 100)
 
 **Examples:**
-- `value: 20, total: 100, mode: "of"` → `20` (20% of 100)
-- `value: 20, total: 100, mode: "is"` → `20` (20 is 20% of 100)
+- `value: 20, total: 100, mode: "of"` → `20.0` (20% of 100)
+- `value: 25, total: 100, mode: "is"` → `25.0` (25 is 25% of 100)
 
 ### Expression Evaluator
 
